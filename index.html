@@ -23,7 +23,7 @@ body {
     background-color: #000;
 }
 
-/* ===== 店名牌子（1958） ===== */
+/* ===== 店名牌子 ===== */
 .shop-sign {
     position: absolute;
     top: 24px;
@@ -40,20 +40,39 @@ body {
     z-index: 10;
 }
 
+/* ===== 点单木牌（右上角） ===== */
+.menu-sign {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background-color: #6B3E26;
+    color: #F5E6D3;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.8;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+.menu-sign strong {
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
 /* ===== 对话区域 ===== */
 .dialogue {
     position: absolute;
     left: 6%;
-    bottom: 140px;
+    bottom: 130px;
     display: flex;
     flex-direction: column;
     gap: 14px;
-    max-width: 42%;
+    max-width: 38%;
 }
 
-/* 微信式气泡（无外框） */
+/* 微信式气泡 */
 .bubble {
-    background: rgba(255, 248, 240, 0.92);
+    background: rgba(255, 248, 240, 0.93);
     color: #4B371C;
     padding: 14px 18px;
     border-radius: 14px;
@@ -70,7 +89,7 @@ body {
 /* ===== 服务员 ===== */
 .waiter-area {
     position: absolute;
-    right: 6%;
+    right: 2%;   /* ✅ 更靠近中间 */
     bottom: 0;
     height: 100%;
     display: flex;
@@ -79,7 +98,7 @@ body {
 }
 
 .waiter-img {
-    max-height: 520px;   /* ✅ 更大 */
+    max-height: 560px;  /* ✅ 再放大 */
     width: auto;
     object-fit: contain;
 }
@@ -88,11 +107,11 @@ body {
 .options {
     position: absolute;
     left: 6%;
-    bottom: 40px;
+    bottom: 30px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 38%;
+    width: 34%;
 }
 
 .option-btn {
@@ -134,8 +153,18 @@ body {
 
 <body>
 
-<!-- 店名牌子 -->
+<!-- 店名牌 -->
 <div class="shop-sign">1958</div>
+
+<!-- 点单木牌 -->
+<div class="menu-sign">
+    <strong>MENU</strong><br>
+    Espresso<br>
+    Latte<br>
+    Cappuccino<br>
+    Flat White<br>
+    Mocha
+</div>
 
 <!-- 对话 -->
 <div class="dialogue" id="chat">
@@ -150,10 +179,10 @@ body {
 <!-- 选项 -->
 <div class="options">
     <button class="option-btn" onclick="choose(1)">
-        1. I want to know some news about the password for the West Lake lock.
+        I want to know some news about the password for the West Lake lock.
     </button>
     <button class="option-btn" onclick="choose(2)">
-        2. I want to further understand the formation of the West District.
+        I want to further understand the formation of the West District.
     </button>
 </div>
 
@@ -174,7 +203,6 @@ function addBubble(html) {
 
 function choose(option) {
     if (option === 1) {
-        addBubble("You chose: I want to know some news about the password for the West Lake lock.");
         addBubble(
             "Oh~ you mean that lock?<br><br>" +
             "Founded in <strong>1958</strong> in Beijing, USTC was initiated by the Chinese Academy of Sciences " +
@@ -185,8 +213,9 @@ function choose(option) {
             "<strong>The password is hidden in the story!</strong>"
         );
     } else {
-        addBubble("You chose: I want to further understand the formation of the West District.");
-        addBubble("Then enter the password, and let Mr. Qian take you to experience it firsthand!");
+        addBubble(
+            "Then enter the password, and let Mr. Qian take you to experience it firsthand!"
+        );
     }
 }
 </script>
