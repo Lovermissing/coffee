@@ -6,7 +6,7 @@
 <title>Cafe Mystery</title>
 
 <style>
-/* ===== 基础重置 ===== */
+/* ===== 全屏背景 ===== */
 html, body {
     height: 100%;
     margin: 0;
@@ -15,16 +15,15 @@ html, body {
     overflow: hidden;
 }
 
-/* ===== 咖啡厅背景（强制显示 · 不放大） ===== */
 body {
-    background-color: #f4efe9;
     background-image: url("images/coffee.jpg");
-    background-position: center center;
+    background-size: cover;          /* ✅ 占满屏幕 */
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-color: #000;
 }
 
-/* ===== 中央聊天框（淡棕色） ===== */
+/* ===== 中央聊天框（浮在背景上） ===== */
 .chat-frame {
     position: absolute;
     top: 50%;
@@ -32,9 +31,9 @@ body {
     transform: translate(-50%, -50%);
     width: 860px;
     height: 540px;
-    background-color: #EEDFCC;
+    background-color: rgba(238, 223, 204, 0.95); /* 淡棕色 */
     border-radius: 14px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
     display: flex;
     overflow: hidden;
 }
@@ -70,7 +69,7 @@ body {
 /* ===== 右侧服务员区 ===== */
 .chat-right {
     width: 38%;
-    background-color: #E3C9A6;
+    background-color: rgba(227, 201, 166, 0.95);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -121,6 +120,7 @@ body {
     font-size: 15px;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    z-index: 9999;
 }
 
 .back-btn:hover {
@@ -136,7 +136,7 @@ body {
 
     <!-- 左侧聊天 -->
     <div class="chat-left" id="chat">
-        <div class="bubble">Hello, welcome to 1958 ☕</div>
+        <div class="bubble">Hello, welcome to our cafe ☕</div>
     </div>
 
     <!-- 右侧服务员 -->
