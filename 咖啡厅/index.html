@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Mystery</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 设置咖啡厅背景图 */
+            background-image: url('images/coffee.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* 主场景容器 */
+        .scene-container {
+            display: flex;
+            align-items: flex-end; /* 底部对齐 */
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 80vh;
+            gap: 20px; /* 元素之间的间距 */
+        }
+
+        /* 左侧：对话与选项区 */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* 靠右对齐，贴近服务员 */
+            justify-content: flex-end;
+            gap: 15px;
+            max-width: 450px;
+        }
+
+        /* 淡棕色聊天框 */
+        .chat-bubble {
+            background-color: #D2B48C; /* 淡棕色 Tan */
+            color: #4B371C;
+            padding: 15px 20px;
+            border-radius: 20px;
+            border-bottom-right-radius: 0; /* 模拟对话框尖角 */
+            line-height: 1.6;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+
+        /* 选项按钮样式 */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .option-btn {
+            background-color: #F5E6D3;
+            color: #5C4033;
+            border: 2px solid #D2B48C;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn:hover {
+            background-color: #D2B48C;
+            transform: translateY(-2px);
+        }
+
+        /* 右侧：服务员区域 */
+        .waiter-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            max-width: 400px;
+            position: relative;
+        }
+
+        /* 服务员图片容器 */
+        .waiter-img-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* 服务员图片处理：尝试融合背景 */
+        .waiter-img {
+            max-height: 70vh;
+            width: auto;
+            object-fit: contain;
+            /* 
+               [核心技术] 混合模式 
+               如果你的 1.jpg 背景是纯色（如纯绿/纯白），使用 multiply 可以让浅色背景变黑透明，
+               从而与咖啡厅背景融合。如果无效，你可能需要提前用 PS 抠图。
+            */
+            mix-blend-mode: multiply; 
+            filter: contrast(1.1); /* 稍微增强对比度 */
+        }
+
+        /* 服务员旁边的专属对话框 */
+        .waiter-chat {
+            background-color: #F5E6D3;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 10px;
+            width: 100%;
+            color: #5C4033;
+            line-height: 1.5;
+            display: none; /* 默认隐藏，点击后显示 */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 底部返回按钮 */
+        .back-btn-container {
+            position: fixed;
+            bottom: 30px;
+            text-align: center;
+        }
+
+        .back-btn {
+            background-color: #8B4513; /* 深棕色 SaddleBrown */
+            color: white;
+            padding: 12px 40px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .back-btn:hover {
+            background-color: #654321;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene-container">
+        <!-- 左侧内容 -->
+        <div class="left-panel">
+            <div class="chat-bubble" id="main-dialogue">
+                Hello! Welcome to our cafe. How can I help you today?
+            </div>
+            <div class="options">
+                <button class="option-btn" onclick="selectOption(1)">I want to know some news about the password for the West Lake lock.</button>
+                <button class="option-btn" onclick="selectOption(2)">I want to further understand the formation of the West District.</button>
+            </div>
+        </div>
+
+        <!-- 右侧服务员 -->
+        <div class="waiter-area">
+            <div class="waiter-img-wrapper">
+                <img src="images/1.jpg" alt="Waiter" class="waiter-img" id="waiter-img">
+            </div>
+            <div class="waiter-chat" id="waiter-response">
+                <!-- JS 会在这里填入服务员的话 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部返回按钮 -->
+    <div class="back-btn-container">
+        <button class="back-btn" onclick="window.location.href='https://lovermissing.github.io/West/'">Return</button>
+    </div>
+
+    <script>
+        function selectOption(choice) {
+            const responseBox = document.getElementById('waiter-response');
+            const dialogueBox = document.getElementById('main-dialogue');
+            
+            // 显示服务员旁边的对话框
+            responseBox.style.display = 'block';
+
+            if (choice === 1) {
+                dialogueBox.innerText = "You chose to ask about the West Lake lock...";
+                responseBox.innerHTML = `
+                    Oh~ You mean that lock? Then, listen to my story:<br><br>
+                    <strong>Founded in 1958 in Beijing, USTC was initiated by the Chinese Academy of Sciences to cultivate elite scientific talents for China’s development, with Guo Moruo as its first president. Later relocated to Hefei, the school keeps its strict academic ethos. Following the spirit of combining theory and practice, countless students and researchers devote themselves to scientific exploration, making it a prestigious science-focused university nationwide.</strong><br><br>
+                    The password is hidden in the story!
+                `;
+            } else if (choice === 2) {
+                dialogueBox.innerText = "You chose to learn about the West District...";
+                responseBox.innerText = "Then enter the password and let Mr. Qian take you to experience it firsthand!";
+            }
+        }
+    </script>
+
+</body>
+</html>
